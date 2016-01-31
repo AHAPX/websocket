@@ -36,8 +36,8 @@ channel = ws-channel
 
 ## Command line arguments
 - config - path to [config file](#config-file)
-- host - host of webserver, default=localhost
-- port - port of webseerver, default=9999
+- host - host of websocket, default=localhost
+- port - port of websocket, default=9999
 - redis-host - host of redis broker, default=locahost
 - redis-port - port of redis broker, default=6379
 - redis-db - number of redis db, default=0
@@ -50,7 +50,7 @@ $ python -m unittest
 
 ## API
 ### Server
-Webserver subscribes to channel and wait messages. Message must be valid JSON.
+Websocket server subscribes to channel and wait messages. Message must be valid JSON.
 It should consist keys:
 - message - required, text or JSON
 - tags - list of tags, if it exists, websocket will send message only for clients with any tag from list
