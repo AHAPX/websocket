@@ -16,10 +16,26 @@ $ pip install -r requirements.txt
 
 ## Usage
 ```bash
-$ python websocket.py
+$ python websocket.py -c ~/websocket.cfg
+```
+
+## Config file
+Config has [ini format](https://en.wikipedia.org/wiki/INI_file), i.e.
+
+```ini
+[main]
+host = localhost
+port = 9998
+
+[redis]
+host = localhost
+port = 6379
+db = 1
+channel = ws-channel
 ```
 
 ## Command line arguments
+- config - path to [config file](#config-file)
 - host - host of webserver, default=localhost
 - port - port of webseerver, default=9999
 - redis-host - host of redis broker, default=locahost

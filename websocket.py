@@ -5,6 +5,7 @@ import json
 import logging
 from functools import partial
 import argparse
+import configparser
 
 import websockets
 import asyncio_redis
@@ -141,19 +142,31 @@ def redis_handler(server):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='simple websocket server', add_help=False)
     parser.add_argument('--help', action='help', help='show this help message and exit')
+    parser.add_argument('--config', '-c', type=str, help='config file')
     parser.add_argument('--host', '-h', type=str, help='host', default='localhost')
     parser.add_argument('--port', '-p', type=int, help='port', default=9999)
     parser.add_argument('--redis-host', type=str, help='redis host', default='localhost')
     parser.add_argument('--redis-port', type=int, help='redis port', default=6379)
-    parser.add_argument('--redis-db', type=int, help='redis db', default='0')
-    parser.add_argument('--channel', '-c', type=str, help='redis channel', default='ws-channel')
+    parser.add_argument('--redis-db', type=int, help='redis db', default=0)
+    parser.add_argument('--channel', type=str, help='redis channel', default='ws-channel')
     args = parser.parse_args()
+
+    settings = vars(args)
+    if args.config:
+        config = configparser.ConfigParser()
+        config.read(args.config)
+        settings['host'] = config.get('main', 'host', fallback=settings['host'])
+        settings['port'] = config.getint('main', 'port', fallback=settings['port'])
+        settings['redis_host'] = config.get('redis', 'host', fallback=settings['redis_host'])
+        settings['redis_port'] = config.getint('redis', 'port', fallback=settings['redis_port'])
+        settings['redis_db'] = config.getint('redis', 'db', fallback=settings['redis_db'])
+        settings['channel'] = config.get('redis', 'channel', fallback=settings['channel'])
 
     WebSocketServer(
         server_handler=server_handler,
         broker_handler=redis_handler,
-        redis_host=args.redis_host,
-        redis_port=args.redis_port,
-        redis_db=args.redis_db,
-        channel=args.channel,
-    ).run(args.host, args.port)
+        redis_host=settings['redis_host'],
+        redis_port=settings['redis_port'],
+        redis_db=settings['redis_db'],
+        channel=settings['channel'],
+    ).run(settings['host'], settings['port'])
