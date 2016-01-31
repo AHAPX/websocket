@@ -83,6 +83,7 @@ class WebSocketServer():
         start_server = websockets.serve(
             partial(self.server_handler, self), host, port
         )
+        logger.info('websocket server started')
         asyncio.async(self.broker_handler(self))
         loop = asyncio.get_event_loop()
         loop.run_until_complete(start_server)
