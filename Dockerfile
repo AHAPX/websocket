@@ -9,6 +9,7 @@ RUN pip install -r /websocket/requirements.txt
 
 VOLUME /websocket
 WORKDIR /websocket
+EXPOSE 9999
 
 CMD python websocket.py -c config.cfg
 

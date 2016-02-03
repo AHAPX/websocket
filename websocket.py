@@ -105,17 +105,19 @@ class WebSocketServer():
 def server_handler(server, websocket, path):
     client = Client(websocket)
     server.clients.add_client(client)
-    while True:
+    while client.is_active():
         try:
             message = yield from websocket.recv()
             if message == 'ping':
                 logger.debug('ping from {}'.format(client.name))
-                client.send('pong')
+                yield from client.send('pong')
             else:
                 logger.info('received: {}'.format(message))
             if message is None:
                 break
             yield server.receiver(client, message)
+        except websockets.ConnectionClosed:
+            break
         except Exception as exc:
             logger.error('\n'.join(traceback.format_tb(sys.exc_info()[2])))
 
