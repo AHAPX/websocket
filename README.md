@@ -26,6 +26,7 @@ Config has [ini format](https://en.wikipedia.org/wiki/INI_file), i.e.
 [main]
 host = localhost
 port = 9998
+debug = false
 
 [redis]
 host = localhost
@@ -38,10 +39,11 @@ channel = ws-channel
 - config - path to [config file](#config-file)
 - host - host of websocket, default=localhost
 - port - port of websocket, default=9999
-- redis-host - host of redis broker, default=locahost
-- redis-port - port of redis broker, default=6379
-- redis-db - number of redis db, default=0
-- channel - redis channel for subscription, default=ws-channel
+- rhost - host of redis broker, default=locahost
+- rport - port of redis broker, default=6379
+- rdb - number of redis db, default=0
+- rchannel - redis channel for subscription, default=ws-channel
+- debug - debug mode
 
 ## Testing
 ```bash

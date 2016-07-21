@@ -12,4 +12,3 @@ WORKDIR /websocket
 EXPOSE 9999
 
 CMD python websocket.py -c config.cfg
-
