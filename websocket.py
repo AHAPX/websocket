@@ -157,7 +157,7 @@ if __name__ == '__main__':
         settings['rhost'] = config.get('redis', 'host', fallback=settings['rhost'])
         settings['rport'] = config.getint('redis', 'port', fallback=settings['rport'])
         settings['rdb'] = config.getint('redis', 'db', fallback=settings['rdb'])
-        settings['channel'] = config.get('redis', 'channel', fallback=settings['rchannel'])
+        settings['rchannel'] = config.get('redis', 'channel', fallback=settings['rchannel'])
 
     if settings['debug']:
         logger.setLevel(logging.DEBUG)
