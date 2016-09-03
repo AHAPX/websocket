@@ -115,7 +115,7 @@ def redis_receiver(message, server):
     except ValueError:
         logger.warning('"{}" is not valid json'.format(message))
     else:
-        logger.info('send: {} - "{}"'.format(', '.join(msg.get('tags', ['ALL'])), msg['message']))
+        logger.info('send: {} - "{}"'.format(', '.join(msg.get('tags') or ['ALL']), msg['message']))
         yield from server.clients.send(msg.get('message'), msg.get('tags', []))
     yield
 
